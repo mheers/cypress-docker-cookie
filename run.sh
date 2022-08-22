@@ -1,7 +1,13 @@
 #! /bin/bash
-SERVICE_CONTAINER=redis
+
+docker build -t backend backend
+
+ALIAS=foo
+
+docker stop $ALIAS
+
+SERVICE_CONTAINER=backend
 CYPRESS_CONTAINER=cypress/included:9.3.1
-ALIAS=foo.bar
-docker run --name $ALIAS --hostname $ALIAS -d $SERVICE_CONTAINER
+docker run --rm --name $ALIAS --hostname $ALIAS -d $SERVICE_CONTAINER
 # redis starts very quickly, so just go ahead
-docker run --link $ALIAS --entrypoint="" -it -v $PWD:/e2e $CYPRESS_CONTAINER cypress run --project /e2e --config baseUrl=https://${ALIAS}:6379/ --browser firefox
+docker run --rm --link $ALIAS --entrypoint="" -it -v $PWD:/e2e $CYPRESS_CONTAINER cypress run --project /e2e --config baseUrl=http://${ALIAS}:8090/ --browser chrome
