@@ -10,7 +10,9 @@ Test 1 where just the first backend is called works:
 Test 2 where the second backend is called first breaks:
 ![Test2](./explanation/test2breaks.png)
 
-This happens only in when running cypress in docker.
+This happens only in when running cypress in docker. It is independent of setting the cookie to secure or switch between SameSite lax and strict.
+
+The problem occurs with tested Cypress version 10.2.0, 10.3.0 and 10.6.0.
 
 ## Howto
 

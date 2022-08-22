@@ -1,46 +1,50 @@
 <html>
- <head>
- </head>
-    <body>
+  <head> </head>
+  <body>
     <h1>Hello World</h1>
     <a href="javascript:callAPI()">API Call</a>
 
-    <ul id="responses">
-    </ul>
+    <ul id="responses"></ul>
     <script>
-    function setCookie() {
-        var d = new Date();
-        d.setTime(d.getTime() + (1*24*60*60*1000));
-        var expires = "expires="+d.toUTCString();
-        document.cookie = "username=John Doe" + ";" + expires + ";path=/";
-    }
-    setCookie();
+      function setCookie() {
+        var d = new Date()
+        d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000)
+        var expires = 'expires=' + d.toUTCString()
+        document.cookie =
+          'username=John Doe' + ';' + expires + ';path=/;samesite=strict'
+      }
+      setCookie()
 
-    function callAPI() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api/test', true);
+      function callAPI() {
+        var xhr = new XMLHttpRequest()
+        xhr.open('GET', '/api/test', true)
         xhr.onload = function () {
-            var data = JSON.parse(xhr.responseText);
-            console.log(data);
+          var data = JSON.parse(xhr.responseText)
+          console.log(data)
 
-            var html = '<li>' +data.millis+ ' ('+data.cookies.length+')<ul>';
-            /* for (var i = 0; i < data.cookies.length; i++) {
+          var html = '<li>' + data.millis + ' (' + data.cookies.length + ')<ul>'
+          /* for (var i = 0; i < data.cookies.length; i++) {
                 html += '<li>' + data.cookies[i].Name + ': ' + data.cookies[i].Value + '</li>';
             } */
 
-            // find username in data.cookies
-            for (var i = 0; i < data.cookies.length; i++) {
-                if (data.cookies[i].Name == 'username') {
-                    html += '<li>' + data.cookies[i].Name + ': ' + data.cookies[i].Value + '</li>';
-                }
+          // find username in data.cookies
+          for (var i = 0; i < data.cookies.length; i++) {
+            if (data.cookies[i].Name == 'username') {
+              html +=
+                '<li>' +
+                data.cookies[i].Name +
+                ': ' +
+                data.cookies[i].Value +
+                '</li>'
             }
+          }
 
-            html += '</ul></li>';
+          html += '</ul></li>'
 
-            document.getElementById('responses').innerHTML += html;
+          document.getElementById('responses').innerHTML += html
         }
-        xhr.send();
-    }
+        xhr.send()
+      }
     </script>
-    </body>
+  </body>
 </html>
