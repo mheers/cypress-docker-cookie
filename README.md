@@ -14,4 +14,10 @@ This happens only in when running cypress in docker.
 
 ## Howto
 
+### Docker
+
 Just install `docker` and run `run.sh`
+
+### Local
+
+Just install `yarn` and run `run_local.sh`

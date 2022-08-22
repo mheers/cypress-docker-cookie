@@ -7,14 +7,12 @@ describe('setCookie', () => {
   })
 
   it('external: cookies are not sent', () => {
-    cy.session('test', () => {
-      cy.visit('http://secondary.bar:8090/')
+    cy.visit(Cypress.env('SECONDARY_URL'))
 
-      cy.origin(Cypress.config('baseUrl'), { args: {} }, ({}) => {
-        cy.visit('/')
-        cy.get('a').contains('API').click()
-        cy.get('ul > li').contains('username').should('exist')
-      })
+    cy.origin(Cypress.config('baseUrl'), { args: {} }, ({}) => {
+      cy.visit('/')
+      cy.get('a').contains('API').click()
+      cy.get('ul > li').contains('username').should('exist')
     })
   })
 })

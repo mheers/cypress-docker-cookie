@@ -4,17 +4,22 @@ services:
     container_name: first.bar
     image: backend
     build: backend
+    ports:
+      - "8090:8090"
 
   backend2:
     container_name: secondary.bar
     image: backend
     build: backend
+    ports:
+      - "8091:8090"
   
   cypress:
     image: mheers/cypress:10.6.0_node16.14.0-chrome99-ff97 # after upgrades make shure to run docker volume rm node_modules
     entrypoint: ["/bin/sh", "-c"]
     environment:
      - "CYPRESS_baseUrl=${CYPRESS_baseUrl:-http://first.bar:8090/}"
+     - "SECONDARY_URL=${SECONDARY_URL:-http://secondary.bar:8090/}"
     #  - "DEBUG=cypress:*"
     privileged: true
     volumes:
@@ -28,7 +33,7 @@ services:
       - bash |
         yarn install &&
         npx wait-on -t 10000 $$CYPRESS_baseUrl &&
-        npx cypress run --headless --browser chrome
+        npx cypress run --headless --env SECONDARY_URL="$$SECONDARY_URL" --browser chrome
 
 volumes:
   node_modules:
