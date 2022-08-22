@@ -1,4 +1,4 @@
-cypress/screenhots
+cypress/screenshots
 cypress/videos
 __debug_bin
 node_modules/

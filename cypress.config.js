@@ -10,6 +10,6 @@ module.exports = defineConfig({
   e2e: {
     specPattern: 'cypress/specs/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'cypress/support/index.js',
-    experimentalSessionAndOrigin: false,
+    experimentalSessionAndOrigin: true,
   },
 })
