@@ -32,11 +32,11 @@ func main() {
 
 // start web server
 func startWebServer(development bool) {
-	fmt.Print("Starting web server in mode\n")
+	fmt.Print("Starting web server in mode ")
 	if development {
-		fmt.Print("development")
+		fmt.Println("development")
 	} else {
-		fmt.Print("production")
+		fmt.Println("production")
 	}
 
 	mutex := http.NewServeMux()

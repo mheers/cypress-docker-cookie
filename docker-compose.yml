@@ -1,0 +1,31 @@
+version: '3.0'
+services:
+  backend:
+    container_name: foo.bar
+    image: backend
+    build: backend
+    ports:
+      - "8090:8090"
+  
+  cypress:
+    image: mheers/cypress:10.6.0_node16.14.0-chrome99-ff97 # after upgrades make shure to run docker volume rm node_modules
+    entrypoint: ["/bin/sh", "-c"]
+    environment:
+     - "CYPRESS_baseUrl=${CYPRESS_baseUrl:-http://foo.bar:8090/}"
+    #  - "DEBUG=cypress:*"
+    privileged: true
+    volumes:
+     - ./cypress/:/e2e/cypress/
+     - ./cypress.config.js:/e2e/cypress.config.js:ro
+     - ./package.json:/e2e/package.json:ro
+     - ./yarn.lock:/e2e/yarn.lock:ro
+     - node_modules:/e2e/node_modules
+    working_dir: /e2e/
+    command:
+      - bash |
+        yarn install &&
+        npx wait-on -t 10000 $$CYPRESS_baseUrl &&
+        npx cypress run --headless --browser chrome
+
+volumes:
+  node_modules:

@@ -1,3 +1,4 @@
 cypress/screenhots
 cypress/videos
 __debug_bin
+node_modules/
