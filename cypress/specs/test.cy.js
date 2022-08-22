@@ -11,11 +11,7 @@ describe('setCookie', () => {
       cy.visit('http://secondary.bar:8090/')
 
       cy.origin(Cypress.config('baseUrl'), { args: {} }, ({}) => {
-        cy.log(Cypress.config('baseUrl'))
-
-        cy.setCookie('name', 'marcel')
-
-        cy.visit({ url: '/' })
+        cy.visit('/')
         cy.get('a').contains('API').click()
         cy.get('ul > li').contains('username').should('exist')
       })
